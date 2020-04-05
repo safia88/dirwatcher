@@ -5,6 +5,7 @@ import argparse
 import signal
 import logging
 from datetime import datetime as dt
+import time
 
 
 __author__ = 'Safia Ali'
@@ -88,6 +89,18 @@ def main():
     logger.info(
         'Watching dir={} for files with extension={} containing text={}'
         .format(args.path, args.ext, args.magic))
+            
+    # Watching directory until exit_flag set true
+    while not exit_flag:
+        try:
+            pass
+        except OSError:
+            logger.error('{} directory does not exist'.format(args.path))
+            time.sleep(args.interval*2)
+        except Exception as e:
+            logger.error('Unhandled exception: {}'.format(e))
+
+        time.sleep(args.interval)
 
     # Setup Shutdown Banner
     uptime = dt.now() - app_start_time
