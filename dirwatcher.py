@@ -4,6 +4,7 @@
 import argparse
 import signal
 import logging
+from datetime import datetime as dt
 
 
 __author__ = 'Safia Ali'
@@ -52,6 +53,18 @@ def set_logger():
     logger.setLevel(logging.DEBUG)
 
 
+def set_banner(run_shut_text, start_uptime_text, app_time):
+    # Setup Startup/Shutdown Banner
+    logger.info(
+        '\n'
+        '-------------------------------------------------------------------\n'
+        '   {0} {2}\n'
+        '   {1} {3}\n'
+        '-------------------------------------------------------------------\n'
+        .format(run_shut_text, start_uptime_text, __file__, app_time)
+    )
+
+
 def main():
     '''parses command line and launches forever while loop'''
     args = create_parser().parse_args()
@@ -63,6 +76,18 @@ def main():
 
     # Call set_logger for set up logger to print to console
     set_logger()
+
+    # Set start time for running app
+    app_start_time = dt.now()
+
+    # Setup Startup Banner
+    set_banner('Running', 'Started on', app_start_time)    
+
+    # Setup Shutdown Banner
+    uptime = dt.now() - app_start_time
+    set_banner('Shutting down', 'Uptime was', uptime)
+
+    logging.shutdown()
 
 
 if __name__ == '__main__':
