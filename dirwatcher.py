@@ -77,6 +77,13 @@ def detect_added_files(files, args):
             watched_files[file] = 0
 
 
+def detect_removed_files(files, args):
+    for file in list(watched_files):
+        if file not in files:
+            logger.info('File removed: {}'.format(file))
+            watched_files.pop(file)
+
+
 def watch_directory(args):
     """Watches given directory and reports when files matching the
     given extension are added or removed.  Calls find_magic to search
@@ -87,6 +94,9 @@ def watch_directory(args):
 
     # Check for new files
     detect_added_files(files_in_directory, args)
+
+    # Stop watching deleted files
+    detect_removed_files(files_in_directory, args)
 
 
 def main():
