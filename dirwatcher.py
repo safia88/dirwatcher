@@ -16,11 +16,11 @@ logger = logging.getLogger(__file__)
 def create_parser():
     """Creates Parser and sets up command line arguments"""
     parser = argparse.ArgumentParser(
-        description='Watches directory for target string in text files'
+        description='Watches a directory of text files for a magic string'
     )
     parser.add_argument('-e', '--ext', type=str, default='.txt',
-                        help='Text file extention to watch')
-    parser.add_argument('-i', '--int', type=float,
+                        help='Text file extention to watch e.g. .txt, .log')
+    parser.add_argument('-i', '--interval', type=float,
                         default=1.0, help='Number of seconds between polling')
     parser.add_argument('path', help='Directory path to watch')
     parser.add_argument('magic', help='String to watch for')
