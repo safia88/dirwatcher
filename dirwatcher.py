@@ -41,6 +41,17 @@ def signal_handler(sig_num, frame):
         exit_flag = True
 
 
+def set_logger():
+    # Set up logger to print to console
+    log_format = ('%(asctime)s.%(msecs)03d %(name)-12s %(levelname)-8s'
+                  '[%(threadName)-12s] %(message)s')
+    logging.basicConfig(
+        format=log_format,
+        datefmt='%Y-%m-%d %H:%M:%S'
+    )
+    logger.setLevel(logging.DEBUG)
+
+
 def main():
     '''parses command line and launches forever while loop'''
     args = create_parser().parse_args()
@@ -49,6 +60,9 @@ def main():
     signal.signal(signal.SIGINT, signal_handler)
     signal.signal(signal.SIGTERM, signal_handler)
     # Now my signal_handler will get called if OS sends either of these to my process.
+
+    # Call set_logger for set up logger to print to console
+    set_logger()
 
 
 if __name__ == '__main__':
