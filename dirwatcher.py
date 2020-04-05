@@ -84,6 +84,11 @@ def main():
     # Setup Startup Banner
     set_banner('Running', 'Started on', app_start_time.isoformat())
 
+    # log with directory name, file extension and magic text which we find
+    logger.info(
+        'Watching dir={} for files with extension={} containing text={}'
+        .format(args.path, args.ext, args.magic))
+
     # Setup Shutdown Banner
     uptime = dt.now() - app_start_time
     set_banner('Shutting down', 'Uptime was', uptime)
