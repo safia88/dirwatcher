@@ -72,7 +72,8 @@ def main():
     # Hook these two signals from the OS ..
     signal.signal(signal.SIGINT, signal_handler)
     signal.signal(signal.SIGTERM, signal_handler)
-    # Now my signal_handler will get called if OS sends either of these to my process.
+    # Now my signal_handler will get called if OS sends either of these to my
+    # process.
 
     # Call set_logger for set up logger to print to console
     set_logger()
@@ -81,7 +82,7 @@ def main():
     app_start_time = dt.now()
 
     # Setup Startup Banner
-    set_banner('Running', 'Started on', app_start_time)    
+    set_banner('Running', 'Started on', app_start_time.isoformat())
 
     # Setup Shutdown Banner
     uptime = dt.now() - app_start_time
