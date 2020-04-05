@@ -15,6 +15,9 @@ __author__ = 'Safia Ali'
 exit_flag = False
 logger = logging.getLogger(__file__)
 
+# keys are filenames, values are last line read
+watched_files = {}
+
 
 def create_parser():
     """Creates Parser and sets up command line arguments"""
@@ -67,6 +70,13 @@ def set_banner(run_shut_text, start_uptime_text, app_time):
     )
 
 
+def detect_added_files(files, args):
+    for file in files:
+        if file.endswith(args.ext) and file not in watched_files:
+            logger.info('New file: {} found in {}'.format(file, args.path))
+            watched_files[file] = 0
+
+
 def watch_directory(args):
     """Watches given directory and reports when files matching the
     given extension are added or removed.  Calls find_magic to search
@@ -74,6 +84,9 @@ def watch_directory(args):
 
     directory = os.path.abspath(args.path)
     files_in_directory = os.listdir(directory)
+
+    # Check for new files
+    detect_added_files(files_in_directory, args)
 
 
 def main():
