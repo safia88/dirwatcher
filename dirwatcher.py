@@ -6,6 +6,7 @@ import signal
 import logging
 from datetime import datetime as dt
 import time
+import os
 
 
 __author__ = 'Safia Ali'
@@ -66,6 +67,15 @@ def set_banner(run_shut_text, start_uptime_text, app_time):
     )
 
 
+def watch_directory(args):
+    """Watches given directory and reports when files matching the
+    given extension are added or removed.  Calls find_magic to search
+    present files for a given magic word"""
+
+    directory = os.path.abspath(args.path)
+    files_in_directory = os.listdir(directory)
+
+
 def main():
     '''parses command line and launches forever while loop'''
     args = create_parser().parse_args()
@@ -89,11 +99,11 @@ def main():
     logger.info(
         'Watching dir={} for files with extension={} containing text={}'
         .format(args.path, args.ext, args.magic))
-            
+
     # Watching directory until exit_flag set true
     while not exit_flag:
         try:
-            pass
+            watch_directory(args)
         except OSError:
             logger.error('{} directory does not exist'.format(args.path))
             time.sleep(args.interval*2)
