@@ -84,6 +84,10 @@ def detect_removed_files(files, args):
             watched_files.pop(file)
 
 
+def scan_single_file(filename, magic_word, directory):
+    pass
+
+
 def watch_directory(args):
     """Watches given directory and reports when files matching the
     given extension are added or removed.  Calls find_magic to search
@@ -97,6 +101,10 @@ def watch_directory(args):
 
     # Stop watching deleted files
     detect_removed_files(files_in_directory, args)
+
+    # Scan watched files
+    for file in watched_files:
+        scan_single_file(file, args.magic, directory)
 
 
 def main():
