@@ -85,7 +85,15 @@ def detect_removed_files(files, args):
 
 
 def scan_single_file(filename, magic_word, directory):
-    pass
+    """Search for the magic word in the filename line by line and
+    keep track of the last line searched"""
+    with open(directory + '/' + filename) as f:
+        for i, line in enumerate(f.readlines(), 1):
+            if magic_word in line and i > watched_files[filename]:
+                logger.info('Magic word: {} found on line: {}'
+                            ' in file: {}'.format(magic_word, i, filename))
+            if i > watched_files[filename]:
+                watched_files[filename] += 1
 
 
 def watch_directory(args):
